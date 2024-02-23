@@ -1,0 +1,13 @@
+ion-row .ion-padding {
+    padding-top: 10px;
+    padding-bottom: 15px;
+    padding-left: 4%;
+    padding-right: 5%;
+}
+
+ion-row.ion-padding ion-col {
+    padding-bottom: 20px;
+}
+
+.namaFitur {
+}
