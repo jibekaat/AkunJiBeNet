@@ -34,7 +34,7 @@ function DataAlatList(dataalat) {
   }
   koordinat = { __html: '<p>' + dataalat.latitude + ',' + dataalat.longitude + '</p>' };
   return (
-    <IonItem detail={true} button={true} onClick={()=>{  }}>
+    <IonItem detail={true} button={true}>
       <IonIcon color="info" slot="start" icon={listCircle} size="large"></IonIcon>
       <IonLabel>
         <h2 className='ion-text-nowrap'>{dataalat.merk_alat} {dataalat.tipe_alat}</h2>
