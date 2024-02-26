@@ -29,43 +29,73 @@ const BodyFeature = ({ platforms }) => {
           <IonCol size="4" onClick={()=>{
             window.location.href='/data-perangkat-jaringan';
           }}>
-            <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
-              <IonImg src="favicon.png" />
-            </IonAvatar>
-          <IonLabel className="ion-text-wrap namaFitur">Data Perangkat Jaringan</IonLabel>
+            <div className="logoFitur">
+              <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
+                <IonImg src="favicon.png"/>
+              </IonAvatar>
+            </div>
+            <div className="namaFitur">
+              <IonLabel>Data Perangkat Jaringan</IonLabel>
+            </div>
           </IonCol>
+          
           <IonCol size="4" onClick={()=>{
             window.location.href='/data-paket';
           }}>
-            <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
-              <IonImg src="favicon.png" />
-            </IonAvatar>
-            <IonLabel className="ion-text-wrap namaFitur">Data Paket</IonLabel>
+            <div className="logoFitur">
+              <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
+                <IonImg src="favicon.png" />
+              </IonAvatar>
+            </div>
+            <div className="namaFitur">
+              <IonLabel>Data Paket</IonLabel>
+            </div>
           </IonCol>
+
           <IonCol size="4">
-            <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
-              <IonImg src="favicon.png" />
-            </IonAvatar>
-            <IonLabel className="ion-text-wrap namaFitur">Data Pelanggan</IonLabel>
+            <div className="logoFitur">
+              <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
+                <IonImg src="favicon.png" />
+              </IonAvatar>
+            </div>
+            <div className="namaFitur">
+              <IonLabel>Data Pelanggan</IonLabel>
+            </div>
           </IonCol>
+
           <IonCol size="4">
-            <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
-              <IonImg src="favicon.png" />
-            </IonAvatar>
-            <IonLabel className="ion-text-wrap namaFitur">Data Personel</IonLabel>
+            <div className="logoFitur">
+              <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
+                <IonImg src="favicon.png" />
+              </IonAvatar>
+            </div>
+            <div className="namaFitur">
+              <IonLabel>Data Personel</IonLabel>
+            </div>
           </IonCol>
+
           <IonCol size="4">
-            <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
-              <IonImg src="favicon.png" />
-            </IonAvatar>
-            <IonLabel className="ion-text-wrap namaFitur">Data Pengaduan Pelanggan</IonLabel>
+            <div className="logoFitur">
+              <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
+                <IonImg src="favicon.png" />
+              </IonAvatar>
+            </div>
+            <div className="namaFitur">
+              <IonLabel>Data Pengaduan Pelanggan</IonLabel>
+            </div>
           </IonCol>
+
           <IonCol size="4">
-            <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
-              <IonImg src="favicon.png" />
-            </IonAvatar>
-            <IonLabel className="ion-text-wrap namaFitur">Data Statistik</IonLabel>
+            <div className="logoFitur">
+              <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
+                <IonImg src="favicon.png" />
+              </IonAvatar>
+            </div>
+            <div className="namaFitur">
+              <IonLabel>Data Statistik</IonLabel>
+            </div>
           </IonCol>
+
         </IonRow>
       </IonGrid>
     </>);

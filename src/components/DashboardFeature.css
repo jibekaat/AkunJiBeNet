@@ -1,3 +1,4 @@
+
 ion-row .ion-padding {
     padding-top: 10px;
     padding-bottom: 15px;
@@ -9,5 +10,18 @@ ion-row.ion-padding ion-col {
     padding-bottom: 20px;
 }
 
-.namaFitur {
+ion-grid .ion-padding {
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: rgb(30, 30, 30);
+}
+
+ion-row .namaFitur{
+    text-align: center;
+}
+
+ion-row .logoFitur {
+    display: grid;
+    place-items: center;
+    margin-bottom: 15px;
 }
