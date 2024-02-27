@@ -1,3 +1,7 @@
+body .md {
+    --ion-item-background : #1e1e1e;
+    --ion-text-color : #ffffff;
+}
 
 ion-row .ion-padding {
     padding-top: 10px;
@@ -13,7 +17,7 @@ ion-row.ion-padding ion-col {
 ion-grid .ion-padding {
     margin-left: 5px;
     margin-right: 5px;
-    background-color: rgb(30, 30, 30);
+    background-color: #1e1e1e;
 }
 
 ion-row .namaFitur{
@@ -24,4 +28,8 @@ ion-row .logoFitur {
     display: grid;
     place-items: center;
     margin-bottom: 15px;
+}
+
+.profil .md ion-grid {
+    margin-top: 50px;
 }

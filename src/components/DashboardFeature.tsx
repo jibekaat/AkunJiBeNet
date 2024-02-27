@@ -5,7 +5,7 @@ interface ContainerProps { }
 const BodyAkun = () => {
   return (
     <IonGrid>
-      <IonRow>
+    <IonRow>
         <IonCol size="12" id="akun">
           <IonItem>
             <IonAvatar slot='start'>
