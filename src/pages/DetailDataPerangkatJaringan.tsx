@@ -81,7 +81,7 @@ const DataPerangkatJaringan: React.FC = () => {
         </IonToolbar>
         {searchIcon == true && (
           <IonToolbar>
-            <IonSearchbar animated={true} searchIcon={search} placeholder="Search" onKeyUp={(e) => {
+            <IonSearchbar className='search' animated={true} searchIcon={search} placeholder="Search" onKeyUp={(e) => {
               let vals = e.currentTarget.value;
               let searchLength = vals?.length;
               if (searchLength > 3) {
