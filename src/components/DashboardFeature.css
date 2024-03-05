@@ -1,5 +1,5 @@
 body .md {
-    --ion-item-background : rgba(206, 90, 90, 0.27);
+    --ion-item-background : rgba(255, 255, 255, 0.195);
     --ion-toolbar-background :  linear-gradient(to right, rgb(15, 30, 65), rgb(30, 0, 0));
     --ion-text-color : #ffffff;
 }
@@ -19,6 +19,7 @@ ion-item {
 
 
 ion-row .ion-padding {
+    min-width: none;
     padding-top: 10px;
     padding-bottom: 15px;
     padding-left: 4%;
@@ -33,7 +34,7 @@ ion-grid .ion-padding {
     border-radius: 20px;
     margin-left: 15px;
     margin-right: 15px;
-    background-color: rgba(206, 90, 90, 0.27);
+    background-color: rgba(255, 255, 255, 0.195);
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.520);
     backdrop-filter: blur(10px);
 }

@@ -1,3 +1,10 @@
 body .md {
-    --ion-background-color: radial-gradient(circle at top left, #3a1111, #101b33);
+    --ion-background-color: radial-gradient(circle at top left, #d60000, #00184d);
 }
+
+ion-fab-button {
+    --background: radial-gradient(circle at top left, #ff1f1f, #135dff);
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
