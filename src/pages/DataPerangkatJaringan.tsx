@@ -1,9 +1,14 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
-import NAMAPERUSAHAAN, { LoadingData, getDataAPI } from '../components/AppFunction';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonNav, IonNavLink, IonPage, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
+import NAMAPERUSAHAAN, { ErrorAxioss, LoadingData, getDataAPI } from '../components/AppFunction';
 import './Home.css';
 
 import { add, listCircle, search } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
+import DetailDataPerangkatJaringan from './DetailDataPerangkatJaringan';
+
+function DataPerangkatJaringan() {
+  return <IonNav root={() => <DataPerangkatJaringanPageRoot />}></IonNav>;
+}
 
 const getDataPerangkatJaringan = async ({ limit, setLimit, search }) => {
   if (typeof search == 'undefined') {
@@ -14,13 +19,13 @@ const getDataPerangkatJaringan = async ({ limit, setLimit, search }) => {
   }
   const data = await getDataAPI({
     url: 'read-alat',
-    data: { limit: (limit * 10) + ',10', search: search },
+    data: { filter:'statusalat-1', limit: (limit * 10) + ',10', search: search },
     metode: 'get'
   });
-  if (data.respon.data.length > 0) {
-    return data.respon.data;
+  if (data.respon.status == 'err') {
+    return ErrorAxioss(5000, data.respon.data, true);
   } else {
-    return data.respon.status;
+    return data.respon.data;
   }
 }
 
@@ -34,19 +39,22 @@ function DataAlatList(dataalat) {
   }
   koordinat = { __html: '<p>' + dataalat.latitude + ',' + dataalat.longitude + '</p>' };
   return (
-    <IonItem detail={true} button={true} onClick={()=>{  }}>
-      <IonIcon color="info" slot="start" icon={listCircle} size="large"></IonIcon>
-      <IonLabel>
-        <h2 className='ion-text-nowrap'>{dataalat.merk_alat} {dataalat.tipe_alat}</h2>
-        <p>{dataalat.ip_address}</p>
-        <p>{dataalat.mac_address}</p>
-        <p>{statusmilik}</p>
-        <div dangerouslySetInnerHTML={koordinat} />
-      </IonLabel>
-    </IonItem>);
+    <IonNavLink routerDirection="forward" component={() => <DetailDataPerangkatJaringan dataalat={dataalat} />}>
+      <IonItem detail={true} button={true} >
+        <IonIcon color="info" slot="start" icon={listCircle} size="large"></IonIcon>
+        <IonLabel>
+          <h2 className='ion-text-nowrap'>{dataalat.merk_alat} {dataalat.tipe_alat}</h2>
+          <p>{dataalat.ip_address}</p>
+          <p>{dataalat.mac_address}</p>
+          <p>{statusmilik}</p>
+          <p dangerouslySetInnerHTML={koordinat} />
+        </IonLabel>
+      </IonItem>
+    </IonNavLink>
+  );
 }
 
-const DataPerangkatJaringan: React.FC = () => {
+const DataPerangkatJaringanPageRoot: React.FC = () => {
   const [dataPerangkat, setDataPerangkat] = useState([]);
   const [dataPerangkatSearch, setDataPerangkatSearch] = useState([]);
   const [page, setPage] = useState(0);
@@ -63,8 +71,8 @@ const DataPerangkatJaringan: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton default-href="/" />
+          <IonButtons onClick={() => { history.back(); }} slot="start">
+            <IonBackButton defaultHref='/home' />
           </IonButtons>
           <IonButtons slot="end">
             <IonButton onClick={() => {
@@ -99,7 +107,7 @@ const DataPerangkatJaringan: React.FC = () => {
       <IonContent fullscreen>
         <IonList inset={true}>
           {searchIcon == false ?
-            dataPerangkat.length == 0 ? (<LoadingData tipe='skeleton' jumlah='6' />) : dataPerangkat.map((dataalat) => {
+            dataPerangkat.length == 0 || !dataPerangkat ? (<LoadingData tipe='skeleton' jumlah='6' />) : dataPerangkat.map((dataalat) => {
               return (<DataAlatList dataalat={dataalat} />);
             })
             : dataPerangkatSearch.length == 0 ? (<LoadingData tipe='skeleton' jumlah='6' />) : dataPerangkatSearch.map((dataalat) => {
@@ -107,16 +115,24 @@ const DataPerangkatJaringan: React.FC = () => {
             })}
         </IonList>
         <IonFab slot="fixed" vertical="bottom" horizontal="end">
-          <IonFabButton>
-            <IonIcon icon={add}></IonIcon>
-          </IonFabButton>
+          <IonNavLink routerDirection="forward" component={() => <DetailDataPerangkatJaringan dataalat='add' />}>
+            <IonFabButton>
+              <IonNavLink routerDirection="forward" component={() => <DetailDataPerangkatJaringan dataalat='add' />}><IonIcon icon={add}></IonIcon></IonNavLink>
+            </IonFabButton>
+          </IonNavLink>
         </IonFab>
         {searchIcon == false && (
           <IonInfiniteScroll onIonInfinite={(ev) => {
-            getDataPerangkatJaringan({ setLimit: setPage, limit: page }).then((dataPJ) => {
-              setPage(page + 1);
-              setDataPerangkat([...dataPerangkat, ...dataPJ]);
-            });
+            if (page >= 0) {
+              getDataPerangkatJaringan({ setLimit: setPage, limit: page }).then((dataPJ) => {
+                if (dataPJ) {
+                  setPage(page + 1);
+                  setDataPerangkat([...dataPerangkat, ...dataPJ]);
+                } else {
+                  setPage(-1);
+                }
+              });
+            }
             setTimeout(() => ev.target.complete(), 500);
           }}
           >

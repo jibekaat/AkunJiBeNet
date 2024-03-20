@@ -23,6 +23,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import DataPerangkatJaringan from './pages/DataPerangkatJaringan';
 import DataPaket from './pages/DataPaket';
+import DataPelanggan from './pages/DataPelanggan';
 
 setupIonicReact();
 
@@ -38,6 +39,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/data-paket">
           <DataPaket />
+        </Route>
+        <Route exact path="/data-pelanggan">
+          <DataPelanggan />
         </Route>
         <Route exact path="/">
           <Redirect to="/home" />

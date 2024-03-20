@@ -129,7 +129,9 @@ const BodyFeature = ({ platforms }) => {
             </div>
           </IonCol>
 
-          <IonCol size="4">
+          <IonCol size="4" onClick={()=>{
+            window.location.href='/data-pelanggan';
+          }}>
             <div className="logoFitur">
               <IonAvatar className="ion-margin-top ion-margin-start ion-margin-end">
                 <IonImg src="favicon.png" />

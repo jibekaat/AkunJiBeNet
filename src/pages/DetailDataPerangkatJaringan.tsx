@@ -1,64 +1,74 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
-import NAMAPERUSAHAAN, { LoadingData, getDataAPI } from '../components/AppFunction';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonInput, IonItem, IonLabel, IonList, IonPage, IonSearchbar, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/react';
+import NAMAPERUSAHAAN, { LoadingData, SelectIPAddress, getDataAPI, validateMAC } from '../components/AppFunction';
 import './Home.css';
 
-import { add, listCircle, search } from 'ionicons/icons';
+import { add, listCircle, save, saveOutline, search } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 
-const getDataPerangkatJaringan = async ({ limit, setLimit, search }) => {
-  if (typeof search == 'undefined') {
-    search = '';
-  } else {
-    search = 'merktipepelangganmacip-' + search;
-    limit = 0;
-  }
-  const data = await getDataAPI({
-    url: 'read-alat',
-    data: { limit: (limit * 10) + ',10', search: search },
-    metode: 'get'
-  });
-  if (data.respon.data.length > 0) {
-    return data.respon.data;
-  } else {
-    return data.respon.status;
-  }
-}
+
 
 function DataAlatList(dataalat) {
-  dataalat = dataalat.dataalat;
-  let koordinat, statusmilik = '';
-  if (dataalat.status_kepemilikan == 1) {
-    statusmilik = 'Hak Milik Perusahaan';
+  const [isValidMAC, setIsValidMAC] = useState<boolean>();
+  const [isOpenIPAddress, setOpenIPAddress] = useState<boolean>(false);
+  let tipepakai, statusmilik;
+  if (dataalat == 'add') {
+    dataalat.ip_address, dataalat.merk_alat, dataalat.tipe_alat, dataalat.mac_address ='';
+    tipepakai='';
+    statusmilik='';
   } else {
-    statusmilik = 'Hak Milik Pelanggan';
+    dataalat = dataalat.dataalat;
+    tipepakai=dataalat.tipe_pemakaian;
+    statusmilik=dataalat.status_kepemilikan;
   }
-  koordinat = { __html: '<p>' + dataalat.latitude + ',' + dataalat.longitude + '</p>' };
+  const [ipaddress, setIPAdress] = useState(dataalat.ip_address);
   return (
-    <IonItem detail={true} button={true}>
-      <IonIcon color="info" slot="start" icon={listCircle} size="large"></IonIcon>
-      <IonLabel>
-        <h2 className='ion-text-nowrap'>{dataalat.merk_alat} {dataalat.tipe_alat}</h2>
-        <p>{dataalat.ip_address}</p>
-        <p>{dataalat.mac_address}</p>
-        <p>{statusmilik}</p>
-        <div dangerouslySetInnerHTML={koordinat} />
-      </IonLabel>
-    </IonItem>);
+    <IonList>
+      <IonItem>
+        <IonSelect label="Tipe Pemakaian" labelPlacement="floating" value={tipepakai}>
+          <IonSelectOption value="1">Radio Pemancar</IonSelectOption>
+          <IonSelectOption value="2">Radio Penerima</IonSelectOption>
+          <IonSelectOption value="3">Router Bridge</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonSelect label="Status Kepemilikan" labelPlacement="floating" value={statusmilik}>
+          <IonSelectOption value="1">Sewa/Milik Perusahaan</IonSelectOption>
+          <IonSelectOption value="2">Milik Pelanggan</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonInput labelPlacement="floating" value={dataalat.merk_alat} label="Merk Alat" placeholder='Merk Alat'></IonInput>
+      </IonItem>
+      <IonItem>
+        <IonInput labelPlacement="floating" value={dataalat.tipe_alat} label="Tipe Alat" placeholder='Tipe Alat'></IonInput>
+      </IonItem>
+      <IonItem>
+        <IonInput labelPlacement="floating" value={dataalat.mac_address} label="MAC Address" placeholder='MAC Address' maxlength={17} onKeyUp={(e) => {
+          let val = e.target.value;
+          if (val.length >= 17) {
+            let valid = validateMAC(val, 'penghubung');
+          } else if (val.length == 12) {
+            let valsplit = val.split(':');
+            if (valsplit.length == 1) {
+              e.currentTarget.maxlength = 12;
+              let valid = validateMAC(val);
+            } else if (valsplit.length == 6) {
+              e.currentTarget.maxlength = 17;
+            }
+          }
+        }}></IonInput>
+      </IonItem>
+      <IonItem>
+        <IonInput id="ipaddress" labelPlacement="floating" value={ipaddress} label="IP Address" placeholder='IP Address' onClick={() => { setOpenIPAddress(true); }}></IonInput>
+        <SelectIPAddress setOpen={setOpenIPAddress} open={isOpenIPAddress} ipAddressSelect={ipaddress} setipaddress={setIPAdress} />
+      </IonItem>
+    </IonList>
+
+  );
 }
 
-const DataPerangkatJaringan: React.FC = () => {
+const DetailDataPerangkatJaringan: React.FC = ({ dataalat }) => {
   const [dataPerangkat, setDataPerangkat] = useState([]);
-  const [dataPerangkatSearch, setDataPerangkatSearch] = useState([]);
-  const [page, setPage] = useState(0);
-  const [searchIcon, searchIconClick] = useState(false);
-  useEffect(() => {
-    if (dataPerangkat.length == 0) {
-      getDataPerangkatJaringan({ setLimit: setPage, limit: page }).then((dataPJ) => {
-        setDataPerangkat(dataPJ);
-      });
-    }
-  }, []);
-
   return (
     <IonPage>
       <IonHeader>
@@ -66,66 +76,14 @@ const DataPerangkatJaringan: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton default-href="/" />
           </IonButtons>
-          <IonButtons slot="end">
-            <IonButton onClick={() => {
-              if (searchIcon == false) {
-                searchIconClick(true);
-              } else {
-                searchIconClick(false);
-              }
-            }}>
-              <IonIcon slot="icon-only" icon={search}></IonIcon>
-            </IonButton>
-          </IonButtons>
-          <IonTitle>Data Perangkat Jaringan - {NAMAPERUSAHAAN().pendek}</IonTitle>
+          <IonTitle>{dataalat=='add' ? 'Tambah':'Detail'} Data Perangkat Jaringan - {NAMAPERUSAHAAN().pendek}</IonTitle>
         </IonToolbar>
-        {searchIcon == true && (
-          <IonToolbar>
-            <IonSearchbar className='search' animated={true} searchIcon={search} placeholder="Search" onKeyUp={(e) => {
-              let vals = e.currentTarget.value;
-              let searchLength = vals?.length;
-              if (searchLength > 3) {
-                getDataPerangkatJaringan({ search: vals }).then((dataPJSearch) => {
-                  if (dataPJSearch == 0) {
-                    setDataPerangkatSearch([]);
-                  } else {
-                    setDataPerangkatSearch(dataPJSearch);
-                  }
-                });
-              }
-            }}></IonSearchbar>
-          </IonToolbar>)}
       </IonHeader>
       <IonContent fullscreen>
-        <IonList inset={true}>
-          {searchIcon == false ?
-            dataPerangkat.length == 0 ? (<LoadingData tipe='skeleton' jumlah='6' />) : dataPerangkat.map((dataalat) => {
-              return (<DataAlatList dataalat={dataalat} />);
-            })
-            : dataPerangkatSearch.length == 0 ? (<LoadingData tipe='skeleton' jumlah='6' />) : dataPerangkatSearch.map((dataalat) => {
-              return (<DataAlatList dataalat={dataalat} />);
-            })}
-        </IonList>
-        <IonFab slot="fixed" vertical="bottom" horizontal="end">
-          <IonFabButton>
-            <IonIcon icon={add}></IonIcon>
-          </IonFabButton>
-        </IonFab>
-        {searchIcon == false && (
-          <IonInfiniteScroll onIonInfinite={(ev) => {
-            getDataPerangkatJaringan({ setLimit: setPage, limit: page }).then((dataPJ) => {
-              setPage(page + 1);
-              setDataPerangkat([...dataPerangkat, ...dataPJ]);
-            });
-            setTimeout(() => ev.target.complete(), 500);
-          }}
-          >
-            <IonInfiniteScrollContent loadingText={"Please wait [" + page + "]..."} loadingSpinner="dots"></IonInfiniteScrollContent>
-          </IonInfiniteScroll>)}
-
+        <DataAlatList dataalat={dataalat} />
       </IonContent>
     </IonPage>
   );
 };
 
-export default DataPerangkatJaringan;
+export default DetailDataPerangkatJaringan;
