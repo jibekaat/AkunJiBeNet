@@ -2,6 +2,7 @@ body .md {
     --ion-item-background : rgba(255, 255, 255, 0.195);
     --ion-toolbar-background :  linear-gradient(to right, rgb(15, 30, 65), rgb(30, 0, 0));
     --ion-text-color : #ffffff;
+    --ion-font-family: 'Roboto';
 }
 
 ion-toolbar {

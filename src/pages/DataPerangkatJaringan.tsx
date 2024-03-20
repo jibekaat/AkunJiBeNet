@@ -44,10 +44,10 @@ function DataAlatList(dataalat) {
         <IonIcon color="info" slot="start" icon={listCircle} size="large"></IonIcon>
         <IonLabel>
           <h2 className='ion-text-nowrap'>{dataalat.merk_alat} {dataalat.tipe_alat}</h2>
-          <p>{dataalat.ip_address}</p>
-          <p>{dataalat.mac_address}</p>
-          <p>{statusmilik}</p>
-          <p dangerouslySetInnerHTML={koordinat} />
+          <p className='fonts'>{dataalat.ip_address}</p>
+          <p className='fonts'>{dataalat.mac_address}</p>
+          <p className='fonts'>{statusmilik}</p>
+          <p className='fonts' dangerouslySetInnerHTML={koordinat} />
         </IonLabel>
       </IonItem>
     </IonNavLink>

@@ -24,26 +24,26 @@ function DataAlatList(dataalat) {
   return (
     <IonList>
       <IonItem>
-        <IonSelect label="Tipe Pemakaian" labelPlacement="floating" value={tipepakai}>
+        <IonSelect className='fonts' label="Tipe Pemakaian" labelPlacement="floating" value={tipepakai}>
           <IonSelectOption value="1">Radio Pemancar</IonSelectOption>
           <IonSelectOption value="2">Radio Penerima</IonSelectOption>
           <IonSelectOption value="3">Router Bridge</IonSelectOption>
         </IonSelect>
       </IonItem>
       <IonItem>
-        <IonSelect label="Status Kepemilikan" labelPlacement="floating" value={statusmilik}>
+        <IonSelect className='fonts' label="Status Kepemilikan" labelPlacement="floating" value={statusmilik}>
           <IonSelectOption value="1">Sewa/Milik Perusahaan</IonSelectOption>
           <IonSelectOption value="2">Milik Pelanggan</IonSelectOption>
         </IonSelect>
       </IonItem>
       <IonItem>
-        <IonInput labelPlacement="floating" value={dataalat.merk_alat} label="Merk Alat" placeholder='Merk Alat'></IonInput>
+        <IonInput className='fonts' labelPlacement="floating" value={dataalat.merk_alat} label="Merk Alat" placeholder='Merk Alat'></IonInput>
       </IonItem>
       <IonItem>
-        <IonInput labelPlacement="floating" value={dataalat.tipe_alat} label="Tipe Alat" placeholder='Tipe Alat'></IonInput>
+        <IonInput className='fonts' labelPlacement="floating" value={dataalat.tipe_alat} label="Tipe Alat" placeholder='Tipe Alat'></IonInput>
       </IonItem>
       <IonItem>
-        <IonInput labelPlacement="floating" value={dataalat.mac_address} label="MAC Address" placeholder='MAC Address' maxlength={17} onKeyUp={(e) => {
+        <IonInput className='fonts' labelPlacement="floating" value={dataalat.mac_address} label="MAC Address" placeholder='MAC Address' maxlength={17} onKeyUp={(e) => {
           let val = e.target.value;
           if (val.length >= 17) {
             let valid = validateMAC(val, 'penghubung');
@@ -59,7 +59,7 @@ function DataAlatList(dataalat) {
         }}></IonInput>
       </IonItem>
       <IonItem>
-        <IonInput id="ipaddress" labelPlacement="floating" value={ipaddress} label="IP Address" placeholder='IP Address' onClick={() => { setOpenIPAddress(true); }}></IonInput>
+        <IonInput className='fonts' id="ipaddress" labelPlacement="floating" value={ipaddress} label="IP Address" placeholder='IP Address' onClick={() => { setOpenIPAddress(true); }}></IonInput>
         <SelectIPAddress setOpen={setOpenIPAddress} open={isOpenIPAddress} ipAddressSelect={ipaddress} setipaddress={setIPAdress} />
       </IonItem>
     </IonList>

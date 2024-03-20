@@ -16,16 +16,16 @@ function DataPaketList(datapaket) {
   return (
     <IonList>
       <IonItem>
-        <IonInput labelPlacement="floating" value={datapaket.kd_paket} label="Kode Paket" placeholder='Kode Paket' maxlength={75}></IonInput>
+        <IonInput className='fonts'  labelPlacement="floating" value={datapaket.kd_paket} label="Kode Paket" placeholder='Kode Paket' maxlength={75}></IonInput>
       </IonItem>
       <IonItem>
-        <IonInput labelPlacement="floating" value={datapaket.nama_paket} label="Nama Paket" placeholder='Nama Paket' maxlength={150}></IonInput>
+        <IonInput className='fonts'  labelPlacement="floating" value={datapaket.nama_paket} label="Nama Paket" placeholder='Nama Paket' maxlength={150}></IonInput>
       </IonItem>
       <IonItem>
-        <IonInput labelPlacement="floating" value={datapaket.masa_aktif} label="Masa Aktif" placeholder='Masa Aktif' min={1} type='number'></IonInput>
+        <IonInput className='fonts'  labelPlacement="floating" value={datapaket.masa_aktif} label="Masa Aktif" placeholder='Masa Aktif' min={1} type='number'></IonInput>
       </IonItem>
       <IonItem>
-        <IonSelect label="Satuan " labelPlacement="floating" value={satuanmasaaktif}>
+        <IonSelect className='fonts'  label="Satuan " labelPlacement="floating" value={satuanmasaaktif}>
           <IonSelectOption value="0">Detik</IonSelectOption>
           <IonSelectOption value="1">Menit</IonSelectOption>
           <IonSelectOption value="2">Jam</IonSelectOption>
