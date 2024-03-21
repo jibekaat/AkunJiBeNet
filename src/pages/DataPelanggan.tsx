@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonNav, IonNavLink, IonPage, IonSearchbar, IonSegment, IonSegmentButton, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonNav, IonNavLink, IonPage, IonSearchbar, IonSegment, IonSegmentButton, IonText, IonTitle, IonToolbar } from '@ionic/react';
 import NAMAPERUSAHAAN, { LoadingData, formatBytes, getDataAPI, satuanMasaAktif, toRupiah } from '../components/AppFunction';
 import './Home.css';
 
@@ -18,7 +18,7 @@ const getDataPelanggan = async ({ limit, setLimit, search }) => {
   }
   const data = await getDataAPI({
     url: 'read-pelanggan',
-    data: { filter: 'statuspelanggan-1', limit: (limit * 10) + ',10', search: search },
+    data: { filter: 'statuspelanggan-2', limit: (limit * 10) + ',10', search: search },
     metode: 'get'
   });
   if (data.respon.data.length > 0) {
@@ -35,10 +35,9 @@ function DataPelangganList(datapaket) {
       <IonItem detail={true} button={true} >
         <IonIcon color="info" slot="start" icon={listCircle} size="large"></IonIcon>
         <IonLabel>
-          <h2 className='ion-text-nowrap'>{datapaket.nama_paket}</h2>
-          <p>Bandwidth Upload {formatBytes((datapaket.kec_up * 1000 * 1.5))}</p>
-          <p>Bandwidth Download {formatBytes((datapaket.kec_down * 1000 * 2.5))}</p>
-          <p>{toRupiah(datapaket.biaya)} per {datapaket.masa_aktif} {satuanMasaAktif(datapaket.satuan_masa_aktif)}</p>
+          <h2 className='ion-text-nowrap'>{datapaket.nama_pelanggan}</h2>
+          <p>{datapaket.kd_pelanggan}</p>
+          <p>{datapaket.alamat} Kelurahan/Desa {datapaket.kel_desa} Kecamatan {datapaket.kec} {datapaket.kab_kota} Provinsi {datapaket.prov}</p>
         </IonLabel>
       </IonItem>
     </IonNavLink>
@@ -76,10 +75,10 @@ const DataPelangganPageRoot: React.FC = () => {
               <IonIcon slot="icon-only" icon={search}></IonIcon>
             </IonButton>
           </IonButtons>
-          <IonTitle>Data Paket - {NAMAPERUSAHAAN().pendek}</IonTitle>
+          <IonTitle>Data Pelanggan - {NAMAPERUSAHAAN().pendek}</IonTitle>
         </IonToolbar>
         <IonToolbar>
-          <IonSegment value="all">
+          <IonSegment value="terpasang">
             <IonSegmentButton value="terpasang">
               <IonLabel>Terpasang</IonLabel>
             </IonSegmentButton>
